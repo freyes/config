@@ -1,0 +1,68 @@
+# -*- mode: conf -*-
+source ~/.mutt.d/private
+set spoolfile="imaps://freyes@linode.tty.cl"
+set folder="imaps://freyes@linode.tty.cl"
+set record="=Sent"
+set postponed="=Drafts"
+set realname="Felipe Reyes"
+my_hdr From: Felipe Reyes <freyes@tty.cl>
+set use_from = yes
+set envelope_from = yes
+auto_view text/html
+alternative_order text/plain text/html
+set sort = 'threads'
+set sort_aux = 'reverse-date'
+set smtp_url="smtp://freyes@linode.tty.cl"
+set mail_check=90
+set timeout=15
+
+# Advanced Setup
+#unset arrow_cursor
+set beep=no
+set beep_new=no
+unset collapse_unread
+unset mark_old
+unset ignore_list_reply_to
+set header_cache="~/.mutt.d/headers"
+set narrow_tree
+set help
+set copy=yes
+set delete=yes
+set move=no
+set forward_quote=yes
+set include=yes
+set timeout=10
+set reverse_name
+set ascii_chars=yes
+set reverse_realname=yes
+set reverse_alias=yes
+set fast_reply="yes"
+set confirmappend=no
+set pager_index_lines=15
+set markers
+set smart_wrap
+set pager_context=5
+set pager_stop = yes
+set status_on_top
+set tilde
+set sig_dashes
+set abort_nosubject=no
+source ~/.mutt.d/mailboxes
+
+set sidebar_width=30
+set sidebar_visible=yes
+set sidebar_delim='|'
+
+bind index \cN sidebar-next
+bind index \cP sidebar-prev
+bind index \cO sidebar-open
+
+bind pager \cP sidebar-prev
+bind pager \cN sidebar-next
+bind pager \cO sidebar-open
+# get the url view working
+
+macro index \cb |urlview\n 'call urlview to extract URLs out of a message'
+macro pager \cb |urlview\n 'call urlview to extract URLs out of a message'
+
+source ~/.mutt.d/color-theme

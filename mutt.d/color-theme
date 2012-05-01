@@ -1,0 +1,61 @@
+# -*- mode: conf -*-
+color sidebar_new brightblue default
+
+color header cyan default .
+color header yellow default ^From
+color header yellow default ^Subject
+#color body yellow default [_a-z\.\$A-Z0-9-]+@[a-zA-Z0-9\./\-]+
+#color body yellow default (http|ftp)://[_a-zA-Z0-9\?\=\&\@\%\#\:\,\./~\-]+
+#color quoted green default
+#color signature cyan default
+#color attachment yellow default
+#color tree white default
+#color indicator default cyan
+#color status yellow blue
+#color tilde blue default
+#color normal white default
+
+# general-doesn't-fit stuff
+color normal color85 default
+color error red default
+color markers yellow default
+#color tilde color142 default
+#color status color142 default
+
+# index stuff
+#color tree color124 default
+#color indicator default color193
+#color index green default ~N
+#color index color193 default ~A
+#color index color34 default ~N
+#color index color34 default ~O
+#color index color124 default ~F
+
+# header stuff
+#color hdrdefault color124 default
+#color header color111 default "^Subject"
+color header red default "^Importance: high"
+
+# gpg stuff
+color body brightgreen default "^gpg: Good signature.*"
+color body brightred default "^gpg: BAD signature.*"
+color body color81 default "^gpg: Can't check signature.*"
+color body color81 default "^-----BEGIN PGP SIGNED MESSAGE-----"
+color body color81 default "^-----BEGIN PGP SIGNATURE-----"
+color body color81 default "^-----END PGP SIGNED MESSAGE-----"
+color body color81 default "^-----END PGP SIGNATURE-----"
+color body color81 default "^Version: GnuPG.*"
+color body color81 default "^Comment: .*"
+
+
+# url, email and web stuff
+color body brightblue default "(finger|ftp|http|https|news|telnet)://[^ >]*"
+color body brightblue default "<URL:[^ ]*>"
+color body brightblue default "www\\.[-.a-z0-9]+\\.[a-z][a-z][a-z]?([-_./~a-z0-9]+)?"
+color body brightblue default "mailto: *[^ ]+\(\\i?subject=[^ ]+\)?"
+color body brightblue default "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+
+# misc body stuff
+color attachment white default
+color signature color81 default
+
