@@ -60,9 +60,13 @@ bind index \cO sidebar-open
 bind pager \cP sidebar-prev
 bind pager \cN sidebar-next
 bind pager \cO sidebar-open
-# get the url view working
 
+# get the url view working
 macro index \cb |urlview\n 'call urlview to extract URLs out of a message'
 macro pager \cb |urlview\n 'call urlview to extract URLs out of a message'
+
+# shortcuts
+#macro index d "s=Trash\n"
+macro index xa "<save-message>=archive<enter>" "Archive message"
 
 source ~/.mutt.d/color-theme
