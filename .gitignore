@@ -1,4 +1,4 @@
-.mutt.d/headers
-.mutt.d/mailboxes
-.mutt.d/private
+mutt.d/headers
+mutt.d/mailboxes
+mutt.d/private
 *~
