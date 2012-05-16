@@ -15,6 +15,8 @@ set sort_aux = 'reverse-date'
 set smtp_url="smtp://freyes@linode.tty.cl"
 set mail_check=90
 set timeout=15
+set editor="nano -r 78 +7"
+set edit_headers=yes
 
 # Advanced Setup
 #unset arrow_cursor
@@ -68,5 +70,11 @@ macro pager \cb |urlview\n 'call urlview to extract URLs out of a message'
 # shortcuts
 #macro index d "s=Trash\n"
 macro index xa "<save-message>=archive<enter>" "Archive message"
+macro pager xa "<save-message>=archive<enter>" "Archive message"
+macro index xS "<save-message>=Spam<enter>" "Mark message as spam"
+macro pager xS "<save-message>=Spam<enter>" "Mark message as spam"
+macro index xB "<save-message>=bank<enter>" "Move message to bank folder"
+macro pager xB "<save-message>=bank<enter>" "Move message to bank folder"
 
 source ~/.mutt.d/color-theme
+source ~/.aliases
