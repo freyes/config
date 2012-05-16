@@ -19,3 +19,9 @@ Xresources
 
 * Configuration for rxvt-unicode
 * setup of yeahconsole to use urxvt
+
+Mercurial
+=========
+
+* Enable rebase
+* use less when is needed to paginate

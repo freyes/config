@@ -1,0 +1,34 @@
+[ui]
+username = Foo Bar <foobar@example.com>
+
+[extensions]
+hgext.graphlog =
+pager =
+rebase = 
+churn =
+keyword =
+fetch =
+color =
+# third party
+shelve = ~/.hg.d/hgshelve.py
+activity=~/.hg.d/hgactivity/activity.py
+
+[pager]
+pager = LESS='FSRX' less
+attend = annotate, incoming, cat, diff, export, glog, log, qdiff
+
+[keywordmaps]
+Author = {author|user}
+Date = {date|utcdate}
+Header = {file},v {node|short} {date|utcdate} {author|user}
+Id = {file|basename},v {node|short} {date|utcdate} {author|user}
+RCSFile = {file|basename},v
+RCSfile = {file|basename},v
+Revision = {node|short}
+Source = {root}/{file},v
+
+[alias]
+sst = !hg status $($HG root) $HG_ARGS
+
+[web]
+cacerts = /etc/ssl/certs/ca-certificates.crt
