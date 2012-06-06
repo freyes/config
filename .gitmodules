@@ -1,0 +1,3 @@
+[submodule "awesome/delightful"]
+	path = awesome/delightful
+	url = git://scm.solitudo.net/delightful.git
