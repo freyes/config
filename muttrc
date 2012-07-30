@@ -9,7 +9,7 @@ my_hdr From: Felipe Reyes <freyes@tty.cl>
 set use_from = yes
 set envelope_from = yes
 auto_view text/html
-alternative_order text/plain text/html
+alternative_order text/html text/plain
 set sort = 'threads'
 set sort_aux = 'reverse-date'
 set smtp_url="smtp://freyes@linode.tty.cl"
