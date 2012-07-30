@@ -1,0 +1,8 @@
+text/html;                     firefox %s & sleep 5; test=RunningX;
+text/html;                     w3m %s; nametemplate=%s.html;
+image/*;                       eog %s; edit=gimp %s; test=RunningX;
+application/pdf;               evince -q %s; test=RunningX;
+application/x-pdf;               evince -q %s; test=RunningX;
+application/ms-tnef;           tnef -t %s && read ans;
+application/msword;            libreoffice %s; test=RunningX;
+application/msword;            antiword %s | more;
