@@ -1,0 +1,13 @@
+[alias]
+	st = status
+	ci = commit
+	br = branch
+
+[user]
+	name = Felipe Reyes
+	email = freyes@tty.cl
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
