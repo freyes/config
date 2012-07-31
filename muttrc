@@ -11,12 +11,13 @@ set envelope_from = yes
 auto_view text/html
 alternative_order text/html text/plain
 set sort = 'threads'
-set sort_aux = 'reverse-date'
+set sort_aux = 'date'
 set smtp_url="smtp://freyes@linode.tty.cl"
 set mail_check=90
 set timeout=15
 set editor="nano -r 78 +7"
 set edit_headers=yes
+set wait_key=no
 
 # Advanced Setup
 #unset arrow_cursor
