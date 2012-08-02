@@ -8,12 +8,41 @@ urxvt.fade: 80
 urxvt.fadeColor: #e9b96e
 urxvt.tintColor: #5c5c5c
 urxvt*urgentOnBell: true
-urxvt*urllauncher: iceweasel
-! matcher.button # 3 is a right-click
-urxvt*matcher.button:        3
+URxvt.perl-ext-common:  default,matcher
+URxvt.urlLauncher:      chromium-browser
+URxvt.matcher.button:   3
 urxvt*depth: 24
 urxvt*background: rgba:0000/0000/0000/dddd
-yeahconsole.term: urxvt
-yeahconsole.toggleKey: Alt+x
-!yeahconsole.keyBigger: Control+<
-!yeahconsole.keySmaller: Control+>
+! yeahconsole
+yeahconsole*term:                  urxvt -fn "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15" +sb
+yeahconsole*restart:               0
+yeahconsole*xOffset:               2240
+yeahconsole*screenWidth:           1280
+yeahconsole*consoleHeight:         20
+yeahconsole*aniDelay:              40
+yeahconsole*stepSize:              1
+yeahconsole*toggleKey:             Control+F12
+yeahconsole*keySmaller:            Control+KP_Subtract
+yeahconsole*keyBigger:             Control+KP_Add
+yeahconsole*keyFull:               Control+F11
+yeahconsole*background:black
+yeahconsole*foreground:white
+*.foreground: #c5c8c6
+*.background: #1d1f21
+*.cursorColor: #aeafad
+*.color0: #000000
+*.color1: #912226
+*.color2: #778900
+*.color3: #ae7b00
+*.color4: #1d2594
+*.color5: #682a9b
+*.color6: #2b6651
+*.color7: #929593
+*.color8: #666666
+*.color9: #cc6666
+*.color10: #b5bd68
+*.color11: #f0c674
+*.color12: #81a2be
+*.color13: #b294bb
+*.color14: #8abeb7
+*.color15: #ecebec
