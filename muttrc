@@ -15,7 +15,7 @@ set sort_aux = 'date'
 set smtp_url="smtp://freyes@linode.tty.cl"
 set mail_check=90
 set timeout=15
-set editor="nano -r 78 +7"
+set editor="emacsclient -t -a 'nano -r 78 +7'"
 set edit_headers=yes
 set wait_key=no
 
@@ -50,19 +50,20 @@ set status_on_top
 set tilde
 set sig_dashes
 set abort_nosubject=no
+set print_command="xpp"
 source ~/.mutt.d/mailboxes
 
-set sidebar_width=30
-set sidebar_visible=yes
-set sidebar_delim='|'
+#set sidebar_width=30
+#set sidebar_visible=yes
+#set sidebar_delim='|'
 
-bind index \cN sidebar-next
-bind index \cP sidebar-prev
-bind index \cO sidebar-open
+#bind index \cN sidebar-next
+#bind index \cP sidebar-prev
+#bind index \cO sidebar-open
 
-bind pager \cP sidebar-prev
-bind pager \cN sidebar-next
-bind pager \cO sidebar-open
+#bind pager \cP sidebar-prev
+#bind pager \cN sidebar-next
+#bind pager \cO sidebar-open
 
 # get the url view working
 macro index \cb |urlview\n 'call urlview to extract URLs out of a message'
@@ -77,5 +78,5 @@ macro pager xS "<save-message>=Spam<enter>" "Mark message as spam"
 macro index xB "<save-message>=bank<enter>" "Move message to bank folder"
 macro pager xB "<save-message>=bank<enter>" "Move message to bank folder"
 
-source ~/.mutt.d/color-theme
+source ~/.mutt.d/color-foo
 source ~/.aliases
