@@ -1,8 +1,9 @@
 # for mutt to view html e-mails
-text/html;html2txt %s; copiousoutput
-image/*;                       eog %s; edit=gimp %s; test=RunningX;
-application/pdf;               evince -q %s; test=RunningX;
-application/x-pdf;               evince -q %s; test=RunningX;
+#text/html;html2txt %s; copiousoutput
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+image/*;                       eog %s; edit=gimp %s; test=sh -c 'test $DISPLAY';
+application/pdf;               evince %s; test=sh -c 'test $DISPLAY';
+application/x-pdf;               evince %s; test=sh -c 'test $DISPLAY';
 application/ms-tnef;           tnef -t %s && read ans;
-application/msword;            libreoffice %s; test=RunningX;
+application/msword;            libreoffice %s; test=sh -c 'test $DISPLAY';
 application/msword;            antiword %s | more;
