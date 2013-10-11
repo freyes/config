@@ -13,6 +13,9 @@ color =
 shelve = ~/.hg.d/hgshelve.py
 activity=~/.hg.d/hgactivity/activity.py
 
+[diff]
+git = on
+
 [pager]
 pager = LESS='FSRX' less
 attend = annotate, incoming, cat, diff, export, glog, log, qdiff
