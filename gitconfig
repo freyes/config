@@ -11,3 +11,9 @@
 	diff = auto
 	interactive = auto
 	status = auto
+[gitreview]
+	username = freyes
+[core]
+	whitespace = trailing-space
+[color "diff"]
+	whitespace = red
