@@ -12,7 +12,7 @@ auto_view text/html
 alternative_order text/html text/plain
 set sort = 'threads'
 set sort_aux = 'date'
-set smtp_url="smtp://freyes@linode.tty.cl"
+set smtp_url="smtp://freyes@linode.tty.cl:587"
 set mail_check=90
 set timeout=15
 set editor="emacsclient -t -a 'nano -r 78 +7'"
