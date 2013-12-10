@@ -1,0 +1,177 @@
+;; -*- mode: lisp -*- 
+(require 'cl)
+
+(setq debug-on-error nil)
+(setq visible-bell 't)
+(setq debug-on-quit nil)
+(setq inhibit-startup-screen t)
+;; set Adobe Source Code Pro font as default
+;; $ wget http://downloads.sourceforge.net/project/sourcecodepro.adobe/SourceCodePro_FontsOnly-1.017.zip
+;; $ unzip SourceCodePro_FontsOnly-1.017.zip
+;; $ mkdir -p ~/.fonts
+;; $ cp SourceCodePro_FontsOnly-1.017/OTF/*.otf ~/.fonts/
+;; $ fc-cache -f -v
+(set-default-font "-adobe-Source Code Pro-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+
+;; Add my favorite repos and  install the packages 
+;; I use if they aren't present
+(require 'package)
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(package-initialize)
+(defvar my-packages
+  '(magit
+    markdown-mode 
+    rainbow-mode 
+    yaml-mode
+    web-mode
+    swbuff
+    multiple-cursors
+    phi-rectangle
+    dired-single
+    multi-term
+    buffer-move
+    )
+  "A list of packages to ensure are installed at launch.")
+
+(defun my-packages-installed-p ()
+  (cl-loop for p in my-packages
+        when (not (package-installed-p p)) do (cl-return nil)
+        finally (cl-return t)))
+ 
+(unless (my-packages-installed-p)
+  ;; check for new packages (package versions)
+  (package-refresh-contents)
+  ;; install the missing packages
+  (dolist (p my-packages)
+    (when (not (package-installed-p p))
+      (package-install p))))
+
+
+;; easier way to cut, copy and paste
+(global-set-key [f2] 'clipboard-kill-region)
+(global-set-key [f3] 'clipboard-kill-ring-save)
+(global-set-key [f4] 'clipboard-yank)
+(global-set-key [f5]  (lambda ()
+			(interactive)
+			(switch-to-buffer-other-window( other-buffer))))
+(global-set-key [f6] (lambda ()
+		       (interactive)
+		       (other-window 1)))
+
+(global-set-key [(control g)] 'goto-line) ;; use Control+g for goto-line
+
+;; just to be sure end/home keys behave as expected
+(global-set-key [end] 'end-of-line)
+(global-set-key [home] 'beginning-of-line)
+
+;; change the order of the buffers with these keybindings
+(global-set-key (kbd "<s-up>")     'buf-move-up)
+(global-set-key (kbd "<s-down>")   'buf-move-down)
+(global-set-key (kbd "<s-left>")   'buf-move-left)
+(global-set-key (kbd "<s-right>")  'buf-move-right)
+
+(setq default-major-mode 'text-mode) ;;Text mode is happier than Fundamental mode ;-)
+(setq-default fill-column 78)
+(setq tab-width 4) ;; setup the tab to 4 spaces width
+(setq-default indent-tabs-mode nil) ;; Prevent Extraneous Tabs
+
+;; define the mail and name
+(setq user-mail-address "freyes@tty.cl")
+(setq user-full-name "Felipe Reyes")
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+(setq ispell-dictionary "en") ;; define the ispell dictionary to use
+(setq x-select-enable-clipboard t) ;; cutting and pasting uses the clipboard
+
+(show-paren-mode t)
+(require 'linum)
+
+(delete-selection-mode 1) ;;-> backspace on a selected region -> deletion
+
+;;display line and column number in toolbar
+(setq line-number-mode t)
+(setq column-number-mode t)
+
+;; enable TRAMP!
+(require 'tramp)
+(setq tramp-default-method "ssh")
+
+;; UI related modes
+(tool-bar-mode -1) ;; turn off toolbar
+(scroll-bar-mode -1) ;; turn off scrollbar
+
+(require 'swbuff)
+(global-set-key [(control tab)]       'swbuff-switch-to-next-buffer)
+(global-set-key (kbd "<C-S-iso-lefttab>") 'swbuff-switch-to-previous-buffer)
+(iswitchb-mode 1)
+
+(require 'whitespace)
+(setq whitespace-style '(face empty tabs lines-tail trailing))
+
+(require 'multiple-cursors)
+(require 'phi-rectangle)
+(phi-rectangle-mode 1)
+
+(require 'yasnippet)
+    
+;; setup the modes I use for programming (buffer editing)
+(autoload 'css-mode "css-mode")
+(add-hook 'css-mode-hook 'rainbow-mode)
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tpl$" . web-mode))
+
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+
+
+;; use message-mode while I write an email using mutt
+(add-to-list 'auto-mode-alist '("/tmp/mutt.*" . message-mode))
+
+;; use a single buffer to navigate directories
+(require 'dired-x)
+(require 'dired-single)
+(defun my-dired-init ()
+  "Bunch of stuff to run for dired, either immediately or when it's
+   loaded."
+  ;; <add other stuff here>
+  (define-key dired-mode-map [return] 'dired-single-buffer)
+  (define-key dired-mode-map [mouse-1] 'dired-single-buffer-mouse)
+  (define-key dired-mode-map "^"
+    (function
+     (lambda nil (interactive) (dired-single-buffer "..")))))
+
+;; if dired's already loaded, then the keymap will be bound
+(if (boundp 'dired-mode-map)
+    ;; we're good to go; just add our bindings
+    (my-dired-init)
+  ;; it's not loaded yet, so add our bindings to the load-hook
+  (add-hook 'dired-load-hook 'my-dired-init))
+
+;; multi-term is really close to xterm or something equivalent
+(autoload 'multi-term "multi-term" nil t)
+(autoload 'multi-term-next "multi-term" nil t)
+(setq multi-term-program "/bin/bash")   ;; use bash
+(global-set-key (kbd "C-c t") 'multi-term-next)
+(global-set-key (kbd "C-c T") 'multi-term) ;; create a new one
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values
+   (quote
+    ((virtualenv-default-directory . "/home/felipe/sources/nCloud.git")
+     (virtualenv-workon . "ncloud")))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
