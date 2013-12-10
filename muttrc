@@ -77,6 +77,9 @@ macro index xS "<save-message>=Spam<enter>" "Mark message as spam"
 macro pager xS "<save-message>=Spam<enter>" "Mark message as spam"
 macro index xB "<save-message>=bank<enter>" "Move message to bank folder"
 macro pager xB "<save-message>=bank<enter>" "Move message to bank folder"
+macro attach i "|gpg --import\n" 'import gpg key'
 
 source ~/.mutt.d/color-foo
 source ~/.aliases
+set pgp_use_gpg_agent = yes
+set pgp_import_command="gpg --no-verbose --import -v %f"
