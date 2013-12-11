@@ -32,6 +32,8 @@
     dired-single
     multi-term
     buffer-move
+    virtualenv
+    nose
     )
   "A list of packages to ensure are installed at launch.")
 
