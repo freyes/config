@@ -2,6 +2,7 @@
 	st = status
 	ci = commit
 	br = branch
+	tip = log --oneline HEAD~1..HEAD
 
 [user]
 	name = Felipe Reyes
