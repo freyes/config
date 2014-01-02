@@ -1,4 +1,4 @@
-;; -*- mode: lisp -*- 
+;; -*- mode: lisp -*-
 (require 'cl)
 
 (setq debug-on-error nil)
@@ -13,7 +13,7 @@
 ;; $ fc-cache -f -v
 (set-default-font "-adobe-Source Code Pro-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 
-;; Add my favorite repos and  install the packages 
+;; Add my favorite repos and  install the packages
 ;; I use if they aren't present
 (require 'package)
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
@@ -43,7 +43,7 @@
   (cl-loop for p in my-packages
         when (not (package-installed-p p)) do (cl-return nil)
         finally (cl-return t)))
- 
+
 (unless (my-packages-installed-p)
   ;; check for new packages (package versions)
   (package-refresh-contents)
