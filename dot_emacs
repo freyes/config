@@ -22,9 +22,10 @@
 (package-initialize)
 (defvar my-packages
   '(magit
-    markdown-mode 
-    rainbow-mode 
+    markdown-mode
+    rainbow-mode
     yaml-mode
+    gruber-darker-theme
     web-mode
     swbuff
     multiple-cursors
@@ -32,10 +33,13 @@
     dired-single
     multi-term
     buffer-move
+    yasnippet
+    ;; python related packages
     virtualenv
     nose
-    yasnippet
-    gruber-darker-theme
+    pydoc-info
+    flycheck
+    puppet-mode
     )
   "A list of packages to ensure are installed at launch.")
 
@@ -124,7 +128,7 @@
 (phi-rectangle-mode 1)
 
 (require 'yasnippet)
-    
+(require 'ecb)
 ;; setup the modes I use for programming (buffer editing)
 (autoload 'css-mode "css-mode")
 (add-hook 'css-mode-hook 'rainbow-mode)
@@ -175,7 +179,8 @@
     ("ce8998464858cd579515f35dd9c582f03e14175d898f67ace69f6a6c5624ed68" "c5c114af83589ea10bc4aa08a32b85e475f77df321493c4e25c2b1e90e11f699" default)))
  '(safe-local-variable-values
    (quote
-    ((virtualenv-default-directory . "/home/felipe/sources/nCloud.git")
+    ((virtualenv-default-directory . "/home/felipe/sources/nCloud.hg")
+     (virtualenv-default-directory . "/home/felipe/sources/nCloud.git")
      (virtualenv-workon . "ncloud")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -183,3 +188,47 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+;; truncate lines in org-mode
+(add-hook 'org-mode-hook
+          (lambda ()
+            (toggle-truncate-lines 1)))
+(setq org-startup-truncated nil)
+(setq org-todo-keywords
+      (quote ((sequence "TODO(t)" "INPROGRESS(s!)" "|" "DONE(d!/!)"))
+             ))
+
+;; python related bits
+(require 'nose)
+(require 'virtualenv)
+(require 'pydoc-info)
+(require 'flycheck)
+(add-hook 'python-mode-hook 'whitespace-mode)
+(add-hook 'python-mode-hook 'flycheck-mode)
+(add-hook 'python-mode-hook
+          (function (lambda ()
+                      (local-set-key (kbd "C-x #") 'comment-or-uncomment-region)
+                      (local-set-key "\C-c." 'nosetests-one)
+                      (local-set-key "\C-c," 'nosetests-module)
+                      )))
+
+;; web programming
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(setq web-mode-engines-alist '(("django" . "\\.tpl\\'")))
+(defun web-mode-hook ()
+  "Hooks for Web mode." 
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-indent-style 2)
+  )
+(add-hook 'web-mode-hook 'web-mode-hook)
