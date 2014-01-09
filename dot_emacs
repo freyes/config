@@ -21,7 +21,8 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 (package-initialize)
 (defvar my-packages
-  '(magit
+  '(redo+
+    magit
     markdown-mode
     rainbow-mode
     yaml-mode
@@ -232,3 +233,5 @@
   (setq web-mode-indent-style 2)
   )
 (add-hook 'web-mode-hook 'web-mode-hook)
+
+(require 'redo+)
