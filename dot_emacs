@@ -11,7 +11,9 @@
 ;; $ mkdir -p ~/.fonts
 ;; $ cp SourceCodePro_FontsOnly-1.017/OTF/*.otf ~/.fonts/
 ;; $ fc-cache -f -v
-(set-default-font "-adobe-Source Code Pro-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;; (set-default-font "-adobe-Source Code Pro-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;; $ sudo apt-get install fonts-inconsolata
+(set-default-font "Inconsolata-12")
 
 ;; Add my favorite repos and  install the packages
 ;; I use if they aren't present
