@@ -3,6 +3,7 @@
 	ci = commit
 	br = branch
 	tip = log --oneline HEAD~1..HEAD
+	root = rev-parse --show-toplevel
 
 [user]
 	name = Felipe Reyes
