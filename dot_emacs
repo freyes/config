@@ -215,6 +215,7 @@
                       (local-set-key (kbd "C-x #") 'comment-or-uncomment-region)
                       (local-set-key "\C-c." 'nosetests-one)
                       (local-set-key "\C-c," 'nosetests-module)
+                      (local-set-key [f11] 'next-error)
                       )))
 
 ;; web programming
@@ -256,3 +257,6 @@ e.g. Sunday, September 17, 2000."
 e.g. 2014-01-22."
   (interactive)                 ; permit invocation in minibuffer
   (insert (format-time-string "%Y-%m-%d")))
+
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "chromium")
