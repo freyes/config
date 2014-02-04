@@ -1,13 +1,17 @@
-[alias]
-	st = status
-	ci = commit
-	br = branch
-	tip = log --oneline HEAD~1..HEAD
-	root = rev-parse --show-toplevel
-
 [user]
 	name = Felipe Reyes
 	email = freyes@tty.cl
+[alias]
+	st = status
+	ci = commit -v
+	br = branch
+	tip = log --oneline HEAD~1..HEAD
+	root = rev-parse --show-toplevel
+	stoat = !toilet -f future STOATS
+	amend-record = !git add -p && git ci --amend
+	update-master = !git checkout master && git pull -r
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 [color]
 	branch = auto
 	diff = auto
@@ -19,3 +23,6 @@
 	whitespace = trailing-space
 [color "diff"]
 	whitespace = red
+[format]
+	attach
+	signoff = true
