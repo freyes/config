@@ -12,7 +12,8 @@
 	update-master = !git checkout master && git pull -r
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-        rollback = reset --soft 'HEAD^'
+	rollback = reset --soft 'HEAD^'
+	undo-merge = reset --hard 'HEAD^'
 [color]
 	branch = auto
 	diff = auto
