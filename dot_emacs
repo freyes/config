@@ -240,6 +240,13 @@
   )
 (add-hook 'web-mode-hook 'web-mode-hook)
 
+;; shell scripting
+(add-hook 'sh-mode-hook
+          (function (lambda ()
+                      (setq sh-basic-offset 2)
+                      (setq sh-indentation 2)
+                      )))
+
 (require 'redo+)
 
 ;; source: http://www.emacswiki.org/cgi-bin/wiki/Journal
