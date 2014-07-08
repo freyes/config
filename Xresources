@@ -46,3 +46,7 @@ yeahconsole*foreground:white
 *.color13: #b294bb
 *.color14: #8abeb7
 *.color15: #ecebec
+Xft.antialias:                 true
+Xft.hinting:                   true
+Xft.hintstyle:                 hintfull
+Xft.rgba:                      rgb
