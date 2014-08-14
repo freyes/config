@@ -26,5 +26,5 @@
 [color "diff"]
 	whitespace = red
 [format]
-	attach
-	signoff = true
+	#attach
+	signoff = false
