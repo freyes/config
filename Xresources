@@ -9,7 +9,7 @@ urxvt.fadeColor: #e9b96e
 urxvt.tintColor: #5c5c5c
 urxvt*urgentOnBell: true
 URxvt.perl-ext-common:  default,matcher
-URxvt.urlLauncher:      x-www-browser
+URxvt.urlLauncher:      firefox
 URxvt.matcher.button:   3
 urxvt*depth: 24
 urxvt*background: rgba:0000/0000/0000/dddd
