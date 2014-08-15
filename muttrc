@@ -1,7 +1,9 @@
 # -*- mode: conf -*-
 source ~/.mutt.d/private
-set spoolfile="imaps://freyes@linode.tty.cl"
-set folder="imaps://freyes@linode.tty.cl"
+set mbox_type=Maildir
+set folder=$HOME/Maildir
+set spoolfile=+/INBOX
+set header_cache=~/.cache/mutt
 set record="=Sent"
 set postponed="=Drafts"
 set realname="Felipe Reyes"
