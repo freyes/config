@@ -45,6 +45,7 @@
     puppet-mode
     ecb
     lua-mode
+    rpm-spec-mode
     )
   "A list of packages to ensure are installed at launch.")
 
