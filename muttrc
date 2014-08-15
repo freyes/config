@@ -11,13 +11,13 @@ my_hdr From: Felipe Reyes <freyes@tty.cl>
 set use_from = yes
 set envelope_from = yes
 auto_view text/html
-alternative_order text/html text/plain
+alternative_order text/plain text/html
 set sort = 'threads'
 set sort_aux = 'date'
-set smtp_url="smtp://freyes@linode.tty.cl:587"
+set smtp_url="smtp://freyes@vader.tty.cl:587"
 set mail_check=90
 set timeout=15
-set editor="emacsclient -t -a 'nano -r 78 +7'"
+set editor="emacsclient -t -a nano"
 set edit_headers=yes
 set wait_key=no
 
@@ -28,7 +28,6 @@ set beep_new=no
 unset collapse_unread
 unset mark_old
 unset ignore_list_reply_to
-set header_cache="~/.mutt.d/headers"
 set narrow_tree
 set help
 set copy=yes
