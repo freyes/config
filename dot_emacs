@@ -205,6 +205,11 @@
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "INPROGRESS(s!)" "|" "DONE(d!/!)"))
              ))
+(setq org-link-abbrev-alist
+      '(("bnc"  . "https://bugzilla.novell.com/show_bug.cgi?id=")
+        ("gmap"      . "http://maps.google.com/maps?q=%s")
+        ("google"    . "http://www.google.com/search?q=")
+        ))
 
 ;; python related bits
 (require 'nose)
