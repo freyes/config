@@ -102,7 +102,7 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-(setq ispell-dictionary "en") ;; define the ispell dictionary to use
+(setq ispell-dictionary "american") ;; define the ispell dictionary to use
 (setq x-select-enable-clipboard t) ;; cutting and pasting uses the clipboard
 
 (show-paren-mode t)
