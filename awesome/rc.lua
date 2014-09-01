@@ -277,7 +277,11 @@ globalkeys = awful.util.table.join(
                   awful.util.getdir("cache") .. "/history_eval")
               end),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    awful.key({ modkey }, "p", function() menubar.show() end),
+    -- Configure hotkeys for audio management
+    awful.key({ }, "XF86AudioRaiseVolume",  APW.Up),
+    awful.key({ }, "XF86AudioLowerVolume",  APW.Down),
+    awful.key({ }, "XF86AudioMute",         APW.ToggleMute)
 )
 
 clientkeys = awful.util.table.join(
@@ -297,12 +301,7 @@ clientkeys = awful.util.table.join(
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
-        end),
-
-    -- Configure hotkeys for audio management
-    awful.key({ }, "XF86AudioRaiseVolume",  APW.Up),
-    awful.key({ }, "XF86AudioLowerVolume",  APW.Down),
-    awful.key({ }, "XF86AudioMute",         APW.ToggleMute)
+        end)
 )
 
 -- Bind all key numbers to tags.
