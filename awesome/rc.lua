@@ -455,6 +455,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 awful.util.spawn_with_shell("pidof emacs || emacs --daemon")
-awful.util.spawn_with_shell("pidof xscreensaver || xscreensaver -no-splash")
+awful.util.spawn_with_shell("pidof xscreensaver || xscreensaver -no-splash &")
 awful.util.spawn_with_shell("pidof polkit-gnome-authentication-agent-1 || /usr/lib/polkit-gnome-authentication-agent-1")
-awful.util.spawn_with_shell("pidof nm-applet || nm-applet --sm-disable")
+awful.util.spawn_with_shell("pidof nm-applet || nm-applet --sm-disable &")
+awful.util.spawn_with_shell("synclient TouchpadOff=1")
