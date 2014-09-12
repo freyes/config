@@ -278,6 +278,10 @@ globalkeys = awful.util.table.join(
               end),
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end),
+
+    -- lock screen
+    awful.key({ modkey, "Control" },  "l",     function () awful.util.spawn_with_shell("xscreensaver-command -lock") end),
+
     -- Configure hotkeys for audio management
     awful.key({ }, "XF86AudioRaiseVolume",  APW.Up),
     awful.key({ }, "XF86AudioLowerVolume",  APW.Down),
