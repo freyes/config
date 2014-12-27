@@ -389,6 +389,8 @@ awful.rules.rules = {
       properties = { tag = tags[1][1] } },
     { rule = { class = "Xchat" },
       properties = { tag = tags[1][8] } },
+    { rule = { instance = "hexchat" },
+      properties = { tag = tags[1][8] } },
     { rule = { class = "Pidgin" },
       properties = { tag = tags[1][9] } },
     { rule = { instance = "claws-mail" },
