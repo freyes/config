@@ -289,3 +289,6 @@ e.g. 2014-01-22."
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-arjen)
+
+(require 'xcscope)
+(cscope-setup)
