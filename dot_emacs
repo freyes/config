@@ -30,7 +30,7 @@
     yaml-mode
     gruber-darker-theme
     web-mode
-    swbuff
+    cycbuf
     multiple-cursors
     phi-rectangle
     dired-single
@@ -120,9 +120,6 @@
 (tool-bar-mode -1) ;; turn off toolbar
 (scroll-bar-mode -1) ;; turn off scrollbar
 
-(require 'swbuff)
-(global-set-key [(control tab)]       'swbuff-switch-to-next-buffer)
-(global-set-key (kbd "<C-S-iso-lefttab>") 'swbuff-switch-to-previous-buffer)
 (iswitchb-mode 1)
 
 (require 'whitespace)
