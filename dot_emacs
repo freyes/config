@@ -46,6 +46,7 @@
     ecb
     lua-mode
     rpm-spec-mode
+    multiple-cursors
     )
   "A list of packages to ensure are installed at launch.")
 
@@ -61,6 +62,9 @@
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p))))
+
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 
 ;; easier way to cut, copy and paste
 (global-set-key [f2] 'clipboard-kill-region)
