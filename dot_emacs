@@ -280,3 +280,8 @@ e.g. 2014-01-22."
 (setq
  uniquify-buffer-name-style 'post-forward
  uniquify-separator ":")
+
+(add-hook 'yaml-mode-hook
+          (function (lambda ()
+                      (local-set-key (kbd "C-c #") 'comment-or-uncomment-region)
+                      )))
