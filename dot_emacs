@@ -272,4 +272,4 @@ e.g. 2014-01-22."
   (insert (format-time-string "%Y-%m-%d")))
 
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "chromium")
+      browse-url-generic-program "sensible-browser")
