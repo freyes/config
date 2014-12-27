@@ -292,3 +292,6 @@ e.g. 2014-01-22."
 
 (require 'xcscope)
 (cscope-setup)
+
+(if (string-equal (window-system) "x")
+    (scroll-bar-mode -1))
