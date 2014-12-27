@@ -285,3 +285,7 @@ e.g. 2014-01-22."
           (function (lambda ()
                       (local-set-key (kbd "C-c #") 'comment-or-uncomment-region)
                       )))
+
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-arjen)
