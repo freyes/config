@@ -207,7 +207,9 @@
       '(("bnc"  . "https://bugzilla.novell.com/show_bug.cgi?id=")
         ("gmap"      . "http://maps.google.com/maps?q=%s")
         ("google"    . "http://www.google.com/search?q=")
+        ("lp"        . "https://bugs.launchpad.net/bugs/")
         ))
+(add-hook 'org-mode-hook 'turn-on-flyspell)
 
 ;; python related bits
 (require 'nose)
