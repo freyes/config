@@ -1,0 +1,1 @@
+/home/freyes/Projects/the-glorious-dotfiles/config/awesome/gnawesome/module/notifications.lua
