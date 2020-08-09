@@ -4,3 +4,6 @@
 [submodule "awesome/apw"]
 	path = awesome/apw
 	url = https://github.com/mokasin/apw.git
+[submodule "awesome/awesome-ban"]
+	path = awesome/awesome-ban
+	url = https://github.com/4ban/awesome-ban
