@@ -53,19 +53,18 @@ do
 end
 -- }}}
 
--- {{{ Third party dependencies
-local spotify_widget = require("awesome-wm-widgets.spotify-widget.spotify")
-local storage_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
--- }}}
-
--- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init("~/.config/awesome/themes/powerarrow/theme.lua")
 beautiful.init("~/.config/awesome/themes/darkblue/theme.lua")
 -- load modules
+-- {{{ Third party dependencies
+-- local spotify_widget = require("awesome-wm-widgets.spotify-widget.spotify")
+-- local storage_widget = require("awesome-wm-widgets.fs-widget.fs-widget")
+-- }}}
+
+
 -- require("modules.notifications")
 local frutils = require("modules.frutils")
-
 -- set different wallpaper per screen
 screen.connect_signal("request::wallpaper", frutils.set_wallpaper)
 
@@ -288,12 +287,13 @@ awful.screen.connect_for_each_screen(function(s)
           --     play_icon = '/usr/share/icons/elementary-xfce/actions/24/media-playback-start.png',
           --     pause_icon = '/usr/share/icons/elementary-xfce/actions/24/media-playback-pause.png'
           -- }),
-          storage_widget(),
+          -- storage_widget(),
           mykeyboardlayout,
           wibox.widget.systray(),
           mytextclock,
           s.mylayoutbox,
-          pulse,
+          beautiful.volume_widget,
+          -- pulse,
         },
     }
 end)
