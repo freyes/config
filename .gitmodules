@@ -13,3 +13,6 @@
 [submodule "awesome/themes/ayu"]
 	path = awesome/themes/ayu
 	url = https://github.com/MArpogaus/awesome-ayu.git
+[submodule "awesome/awesome-wm-widgets"]
+	path = awesome/awesome-wm-widgets
+	url = https://github.com/streetturtle/awesome-wm-widgets/
