@@ -6,7 +6,8 @@
 	url = https://github.com/mokasin/apw.git
 [submodule "awesome/awesome-ban"]
 	path = awesome/awesome-ban
-	url = https://github.com/4ban/awesome-ban
+	url = https://github.com/freyes/awesome-ban.git
+	branch = customization
 [submodule "awesome/lain"]
 	path = awesome/lain
 	url = https://github.com/lcpz/lain
