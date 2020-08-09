@@ -13,22 +13,26 @@
 ;; $ fc-cache -f -v
 ;; (set-default-font "-adobe-Source Code Pro-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 ;; $ sudo apt-get install fonts-inconsolata
-(set-default-font "Inconsolata-12")
+(set-default-font "Fira Code-12")
+(add-to-list 'load-path (expand-file-name "~/.emacs.local/"))
 
 ;; Add my favorite repos and  install the packages
 ;; I use if they aren't present
 (require 'package)
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("tromey" . "http://tromey.com/elpa/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 (defvar my-packages
-  '(redo+
+  '(helm
+    webpaste
+    simpleclip
     magit
+    git-link
+    gitconfig-mode
+    gist
     markdown-mode
     rainbow-mode
     yaml-mode
-    gruber-darker-theme
     web-mode
     cycbuf
     multiple-cursors
@@ -37,16 +41,34 @@
     multi-term
     buffer-move
     yasnippet
+    lsp-mode
     ;; python related packages
     virtualenv
-    nose
-    pydoc-info
+    ;; nose
+    ;; pydoc-info
     flycheck
     puppet-mode
     ecb
     lua-mode
     rpm-spec-mode
     multiple-cursors
+    xcscope
+    org-bullets
+    ;; themes
+    gruber-darker-theme
+    arjen-grey-theme
+    gruvbox-theme
+    doom-themes
+    go-mode
+    projectile
+    helm-projectile
+    treemacs
+    treemacs-projectile
+    ;; company
+    company
+    company-go
+    company-jedi
+    company-lsp
     )
   "A list of packages to ensure are installed at launch.")
 
@@ -62,6 +84,35 @@
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p))))
+
+; keep a list of recently opened files                                                                      
+(recentf-mode 1)
+(setq-default recent-save-file "~/.emacs.d/recentf")
+
+(require 'helm-config)
+(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+      helm-ff-file-name-history-use-recentf t
+      helm-echo-input-in-header-line t
+      helm-M-x-fuzzy-match t ; fuzzy matching for helm-M-x
+      helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match    t
+      )
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "M-x") #'helm-M-x)
+(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+(global-set-key (kbd "C-x C-f") #'helm-find-files)
+(global-set-key (kbd "C-x b") #'helm-mini)
+(with-eval-after-load 'helm-files
+  (define-key helm-find-files-map "\t" 'helm-execute-persistent-action)
+  )
+
+
+(add-hook 'go-mode-hook (lambda ()
+                          (set (make-local-variable 'company-backends) '(company-go))
+                          (company-mode)))
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -90,10 +141,72 @@
 (global-set-key (kbd "<s-left>")   'buf-move-left)
 (global-set-key (kbd "<s-right>")  'buf-move-right)
 
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "<f7>") 'next-error)
+
 (setq default-major-mode 'text-mode) ;;Text mode is happier than Fundamental mode ;-)
 (setq-default fill-column 78)
 (setq tab-width 4) ;; setup the tab to 4 spaces width
 (setq-default indent-tabs-mode nil) ;; Prevent Extraneous Tabs
+
+(setq projectile-project-search-path '("~/Projects/" "~/sources/upstream/"))
+
+(require 'request)
+(require 'cl-lib)
+(require 'webpaste)
+(defun paste-ubuntu-field-lambda ()
+  "lambda for building post compatible with paste.ubuntu.com."
+  (cl-function (lambda (&key text
+                             post-field
+                             provider-uri
+                             (post-lang-field-name nil)
+                             (post-data '()))
+                 (cl-pushnew (cons post-field text) post-data)
+
+                 ;; Fetch language name for this provider
+                 (let ((language-name (webpaste--get-buffer-language provider-uri)))
+                   (if (and post-lang-field-name language-name)
+                       ;; Append language to the post-data
+                       (cl-pushnew (cons post-lang-field-name language-name) post-data)
+                     ;; if language coudn't be detected simply use text the
+                     ;; default handler ommits the post-lang-field-name if
+                     ;; couldn't be detected, but for paste.ubuntu.com this is
+                     ;; mandatory
+                     (cl-pushnew (cons post-lang-field-name "text") post-data)
+                     ))
+
+                 post-data)))
+
+(cl-defun paste-ubuntu-location-header ()
+  "Callback to get the Location header and append it to paste.ubuntu.com."
+  (cl-function (lambda (&key response &allow-other-keys)
+                 (when response
+                   (webpaste--return-url
+                    (request-response-url response))))))
+
+(add-to-list
+ 'webpaste-providers-alist
+ '("paste.ubuntu.com"
+   :uri "https://paste.ubuntu.com/"
+   :post-data (("poster" . (user-login-name))
+               ;; make the paste expire in a week.
+               ("expiration" . "week"))
+   :post-field "content"
+   :post-lang-field-name "syntax"
+   :post-field-lambda paste-ubuntu-field-lambda
+   :success-lambda paste-ubuntu-location-header
+   )
+ )
+
+(setq webpaste-provider-priority '("paste.ubuntu.com"))
+;; To build your own hook to use simpleclip, you could do like this:
+(add-hook 'webpaste-return-url-hook
+          (lambda (url)
+            (message "Copied URL to clipboard: %S" url)
+            (simpleclip-set-contents url)))
+;; Open recently created pastes in an external browser
+(setq webpaste-open-in-browser t)
 
 ;; define the mail and name
 (setq user-mail-address "freyes@tty.cl")
@@ -124,7 +237,6 @@
 (tool-bar-mode -1) ;; turn off toolbar
 (scroll-bar-mode -1) ;; turn off scrollbar
 
-(iswitchb-mode 1)
 
 (require 'whitespace)
 (setq whitespace-style '(face empty tabs lines-tail trailing))
@@ -180,10 +292,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("696927ed40057050d219989dd473cc08fab27995e4febd6cf14429a448364bc6" "ce8998464858cd579515f35dd9c582f03e14175d898f67ace69f6a6c5624ed68" "c5c114af83589ea10bc4aa08a32b85e475f77df321493c4e25c2b1e90e11f699" default)))
+ '(custom-safe-themes
+   (quote
+    ("696927ed40057050d219989dd473cc08fab27995e4febd6cf14429a448364bc6" "ce8998464858cd579515f35dd9c582f03e14175d898f67ace69f6a6c5624ed68" "c5c114af83589ea10bc4aa08a32b85e475f77df321493c4e25c2b1e90e11f699" default)))
  '(delete-selection-mode nil)
  '(mark-even-if-inactive t)
- '(safe-local-variable-values (quote ((virtualenv-default-directory . "/home/felipe/sources/nCloud.hg") (virtualenv-default-directory . "/home/felipe/sources/nCloud.git") (virtualenv-workon . "ncloud"))))
+ '(package-selected-packages
+   (quote
+    (monokai-pro-theme monokai-theme afternoon-theme hc-zenburn-theme doom-themes sublime-themes dracula-theme simpleclip webpaste company-lsp lsp-mode outline-magic treemacs treemacs-projectile helm-projectile helm xcscope yasnippet yaml-mode web-mode virtualenv rpm-spec-mode rainbow-mode puppet-mode phi-rectangle multiple-cursors multi-term markdown-mode magit lua-mode gruvbox-theme gruber-darker-theme flycheck ecb dired-single cycbuf buffer-move arjen-grey-theme)))
+ '(safe-local-variable-values
+   (quote
+    ((virtualenv-default-directory . "/home/felipe/sources/nCloud.hg")
+     (virtualenv-default-directory . "/home/felipe/sources/nCloud.git")
+     (virtualenv-workon . "ncloud"))))
  '(scroll-bar-mode (quote right))
  '(transient-mark-mode 1))
 (custom-set-faces
@@ -191,9 +312,21 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(org-document-title ((t (:inherit default :weight bold :foreground "#e4e4ef" :font "Verdana" :height 2.0 :underline nil))))
+ '(org-level-1 ((t (:inherit default :weight bold :foreground "#e4e4ef" :font "Verdana" :height 1.25))))
+ '(org-level-2 ((t (:inherit default :weight bold :foreground "#e4e4ef" :font "Verdana" :height 1.1))))
+ '(org-level-3 ((t (:inherit default :weight bold :foreground "#e4e4ef" :font "Verdana" :height 1.0))))
+ '(org-level-4 ((t (:inherit default :weight bold :foreground "#e4e4ef" :font "Verdana" :height 1.0))))
+ '(org-level-5 ((t (:inherit default :weight bold :foreground "#e4e4ef" :font "Verdana"))))
+ '(org-level-6 ((t (:inherit default :weight bold :foreground "#e4e4ef" :font "Verdana"))))
+ '(org-level-7 ((t (:inherit default :weight bold :foreground "#e4e4ef" :font "Verdana"))))
+ '(org-level-8 ((t (:inherit default :weight bold :foreground "#e4e4ef" :font "Verdana")))))
 
-(load-theme 'gruber-darker)
+;; (load-theme 'arjen-grey t)
+;;(load-theme 'gruber-darker t)
+;; (load-theme 'mytheme t)
+;; (load-theme 'doom-acario-dark t)
+(load-theme 'monokai t)
 
 ;; truncate lines in org-mode
 (add-hook 'org-mode-hook
@@ -210,20 +343,39 @@
         ("lp"        . "https://bugs.launchpad.net/bugs/")
         ))
 (add-hook 'org-mode-hook 'turn-on-flyspell)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(let* ((variable-tuple
+        (cond ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
+              ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
+              ((x-list-fonts "Verdana")         '(:font "Verdana"))
+              ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+              (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+       (base-font-color     (face-foreground 'default nil 'default))
+       (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+
+  (custom-theme-set-faces
+   'user
+   `(org-level-8 ((t (,@headline ,@variable-tuple))))
+   `(org-level-7 ((t (,@headline ,@variable-tuple))))
+   `(org-level-6 ((t (,@headline ,@variable-tuple))))
+   `(org-level-5 ((t (,@headline ,@variable-tuple))))
+   `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.0))))
+   `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.0))))
+   `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.05))))
+   `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.1))))
+   `(org-document-title ((t (,@headline ,@variable-tuple :height 2.0 :underline nil))))))
 
 ;; python related bits
-(require 'nose)
+;; (require 'nose)
 (require 'virtualenv)
-(require 'pydoc-info)
+;; (require 'pydoc-info)
 (require 'flycheck)
 (add-hook 'python-mode-hook 'whitespace-mode)
 (add-hook 'python-mode-hook 'flycheck-mode)
 (add-hook 'python-mode-hook
           (function (lambda ()
                       (local-set-key (kbd "C-x #") 'comment-or-uncomment-region)
-                      (local-set-key "\C-c." 'nosetests-one)
-                      (local-set-key "\C-c," 'nosetests-module)
-                      (local-set-key [f11] 'next-error)
+                      (add-to-list 'company-backends 'company-jedi)
                       )))
 
 ;; web programming
@@ -253,7 +405,7 @@
                       (setq sh-indentation 2)
                       )))
 
-(require 'redo+)
+;; (require 'redo+)
 
 ;; source: http://www.emacswiki.org/cgi-bin/wiki/Journal
 (defun insert-now ()
@@ -288,9 +440,6 @@ e.g. 2014-01-22."
                       (local-set-key (kbd "C-c #") 'comment-or-uncomment-region)
                       )))
 
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-arjen)
 
 (require 'xcscope)
 (cscope-setup)
